@@ -1,25 +1,13 @@
 import type { VariantProps } from 'class-variance-authority';
-import { ComponentProps } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 
-import { buttonVariants } from './Button.variants.ts';
+import { buttonVariants } from './Button.variants';
 
 export type ButtonProps = ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    icon?: ReactNode;
+    iconSize?: string | number;
+    isActive?: boolean;
+    activeIcon?: ReactNode;
   };
-
-export type VariantConfig = {
-  variant: {
-    primary: string;
-    subtle: string;
-    outline: string;
-    ghost: string;
-    link: string;
-  };
-  size: {
-    sm: string;
-    md: string;
-    lg: string;
-    icon: string;
-  };
-};

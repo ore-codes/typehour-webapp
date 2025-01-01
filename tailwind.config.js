@@ -11,9 +11,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: '#4CAF50',
-        secondary: '#365137',
-        subtle: '#8FA48F',
+        neutral: '#96c624',
+        primary: '#00763E',
+        secondary: '#083E2C',
+        text: '#0C2039',
+        light: '#F5F5F5',
+        dark: '#292D32',
+        placeholder: '#9095A1',
+        white: '#FFFFFF',
+        danger: '#E33629',
+        lightGrey: '#FBFBFB',
+        warning: '#E8871E',
       },
     },
   },
