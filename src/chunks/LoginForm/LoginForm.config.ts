@@ -1,17 +1,13 @@
 import * as Yup from 'yup';
 
-import { TextboxProps } from '@/components/Textbox/Textbox.types.ts';
+import { LoginFormField } from '@/chunks/LoginForm/LoginForm.types.ts';
 
 export const loginSchema = Yup.object({
   email: Yup.string().email().required().label('Email address'),
   password: Yup.string().required().label('Password'),
 }).required();
 
-type FormField = TextboxProps & {
-  fieldName: keyof Yup.InferType<typeof loginSchema>;
-};
-
-export const loginFields: FormField[] = [
+export const loginFields: LoginFormField[] = [
   {
     fieldName: 'email',
     placeholder: 'Email address',

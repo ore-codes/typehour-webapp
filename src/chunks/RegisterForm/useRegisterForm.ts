@@ -10,10 +10,8 @@ import { registerSchema } from './RegisterForm.config.ts';
 import { RegisterRes } from './RegisterForm.types.ts';
 
 export default function useRegisterForm() {
+  const form = useForm({ resolver: yupResolver(registerSchema) });
   const apiRequest = useApiRequest<RegisterRes>();
-  const form = useForm({
-    resolver: yupResolver(registerSchema),
-  });
 
   const handleSubmit = form.handleSubmit((data) => {
     const register$ = from(apiClient.post('auth/register', data));
@@ -27,5 +25,5 @@ export default function useRegisterForm() {
     });
   });
 
-  return { form, handleSubmit, errors: apiRequest.errors };
+  return { form, handleSubmit, apiRequest };
 }
