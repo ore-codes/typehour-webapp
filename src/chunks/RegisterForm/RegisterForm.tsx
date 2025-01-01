@@ -9,7 +9,6 @@ import useRegisterForm from './useRegisterForm.ts';
 
 const RegisterForm: FC = () => {
   const h = useRegisterForm();
-
   return (
     <form onSubmit={h.handleSubmit} className="flex flex-col gap-8 rounded-xl px-11 py-9 lg:border">
       <div className="space-y-2">

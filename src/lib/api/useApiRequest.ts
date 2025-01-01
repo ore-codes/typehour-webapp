@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { useState } from 'react';
-import { BehaviorSubject, catchError, Observable, of, switchMap } from 'rxjs';
+import { catchError, from, of, switchMap } from 'rxjs';
 
 import { ApiRequestState, ErrorResponse } from './api.types.ts';
 
@@ -11,40 +11,31 @@ export function useApiRequest<T>() {
     loading: false,
   });
 
-  const subject = new BehaviorSubject(state);
-
-  const makeRequest = (observable: Observable<AxiosResponse<T>>) => {
-    const initialLoadingState = { ...state, loading: true, error: [] };
+  const makeRequest = (promise: Promise<AxiosResponse<T>>) => {
+    const initialLoadingState = { ...state, loading: true, errors: [] };
     setState(initialLoadingState);
-    subject.next(initialLoadingState);
 
-    observable
-      .pipe(
-        switchMap((response) => {
-          const successState = { data: response.data, errors: [], loading: false };
-          setState(successState);
-          subject.next(successState);
-          return of(response.data);
-        }),
-        catchError((err: AxiosError<ErrorResponse>) => {
-          const errors = err.response?.data?.message || [];
-          const errorState = {
-            data: null,
-            errors: Array.isArray(errors) ? errors : [errors],
-            loading: false,
-          };
-          setState(errorState);
-          subject.next(errorState);
-          return of(errors);
-        })
-      )
-      .subscribe();
+    return from(promise).pipe(
+      switchMap((response) => {
+        const successState = { data: response.data, errors: [], loading: false };
+        setState(successState);
+        return of(response.data);
+      }),
+      catchError((err: AxiosError<ErrorResponse>) => {
+        const errors = err.response?.data?.message || [];
+        const errorState = {
+          data: null,
+          errors: Array.isArray(errors) ? errors : [errors],
+          loading: false,
+        };
+        setState(errorState);
+        return of(null);
+      })
+    );
   };
 
   return {
     ...state,
-    subject,
     makeRequest,
-    observable: subject.asObservable(),
   };
 }

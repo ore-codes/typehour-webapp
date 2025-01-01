@@ -9,7 +9,6 @@ import useLoginForm from './useLoginForm.ts';
 
 const LoginForm: FC = () => {
   const h = useLoginForm();
-
   return (
     <form
       onSubmit={h.handleSubmit}
