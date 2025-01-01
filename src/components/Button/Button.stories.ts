@@ -65,7 +65,6 @@ const meta: Meta<typeof Button> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     variant: {
       options: ['default', 'outline', 'link', 'ghost'],

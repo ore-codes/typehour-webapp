@@ -29,7 +29,6 @@ const meta: Meta<typeof Textbox> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
