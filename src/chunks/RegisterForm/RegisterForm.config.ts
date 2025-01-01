@@ -1,8 +1,24 @@
 import * as Yup from 'yup';
 
-import type { RegisterFormField } from './RegisterForm.types.ts';
+import { TextboxProps } from '@/components/Textbox/Textbox.types.ts';
 
-export const registerFields: RegisterFormField[] = [
+export const registerSchema = Yup.object({
+  email: Yup.string().email().required().label('Email address'),
+  name: Yup.string().required().label('Username'),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d).{6,}$/,
+      'Password must be at least six characters long and contain at least one letter and one number'
+    )
+    .required()
+    .label('Password'),
+}).required();
+
+type FormField = TextboxProps & {
+  fieldName: keyof Yup.InferType<typeof registerSchema>;
+};
+
+export const registerFields: FormField[] = [
   {
     fieldName: 'email',
     placeholder: 'Email address',
@@ -20,9 +36,3 @@ export const registerFields: RegisterFormField[] = [
     autoComplete: 'new-password',
   },
 ];
-
-export const registerSchema = Yup.object({
-  email: Yup.string().email().required().label('Email address'),
-  name: Yup.string().required().label('Username'),
-  password: Yup.string().required().label('Password'),
-}).required();

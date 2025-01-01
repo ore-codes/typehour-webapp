@@ -1,3 +1,4 @@
 export const Page = {
-  Landing: '/',
+  SignIn: '/',
+  SignUp: '/sign-up',
 };
