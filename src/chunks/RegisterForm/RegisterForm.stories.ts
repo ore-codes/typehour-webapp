@@ -4,7 +4,7 @@ import RegisterForm from './RegisterForm.tsx';
 
 type Story = StoryObj<typeof RegisterForm>;
 
-export const Primary: Story = {};
+export const Default: Story = {};
 
 const meta: Meta<typeof RegisterForm> = {
   component: RegisterForm,

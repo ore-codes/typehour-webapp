@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { TextboxProps } from '@/components/Textbox/Textbox.types.ts';
+import { RegisterFormField } from './RegisterForm.types.ts';
 
 export const registerSchema = Yup.object({
   email: Yup.string().email().required().label('Email address'),
@@ -14,11 +14,7 @@ export const registerSchema = Yup.object({
     .label('Password'),
 }).required();
 
-type FormField = TextboxProps & {
-  fieldName: keyof Yup.InferType<typeof registerSchema>;
-};
-
-export const registerFields: FormField[] = [
+export const registerFields: RegisterFormField[] = [
   {
     fieldName: 'email',
     placeholder: 'Email address',
