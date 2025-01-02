@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import RegisterForm from '@/chunks/RegisterForm/RegisterForm.tsx';
 import AppLogo from '@/components/AppLogo/AppLogo.tsx';
-import { Page } from '@/pages/constant.ts';
+import { Page } from '@/constants/pages.ts';
 
 const SignUp: FC = () => {
   return (
@@ -17,7 +17,7 @@ const SignUp: FC = () => {
         <div className="flex flex-col gap-[22px] py-4 lg:min-w-[28rem]">
           <AppLogo className="self-center !text-lg" />
           <RegisterForm />
-          <section className="rounded-xl border-border p-4 text-center lg:border">
+          <section className="border-border rounded-xl p-4 text-center lg:border">
             <span>Already have an account?</span>{' '}
             <Link
               to={Page.SignIn}
