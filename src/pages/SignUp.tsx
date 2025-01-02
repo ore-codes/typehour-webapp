@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import RegisterForm from '@/chunks/RegisterForm/RegisterForm.tsx';
+import RegisterForm from '@/chunks/auth/RegisterForm/RegisterForm.tsx';
 import AppLogo from '@/components/AppLogo/AppLogo.tsx';
 import { Page } from '@/constants/pages.ts';
 

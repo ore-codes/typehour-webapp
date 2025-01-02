@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { LoginFormField } from '@/chunks/LoginForm/LoginForm.types.ts';
+import { LoginFormField } from '@/chunks/auth/LoginForm/LoginForm.types.ts';
 
 export const loginSchema = Yup.object({
   email: Yup.string().email().required().label('Email address'),

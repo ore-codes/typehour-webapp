@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { LoginRes } from '@/chunks/LoginForm/LoginForm.types.ts';
+import { LoginRes } from '@/chunks/auth/LoginForm/LoginForm.types.ts';
 import { Page } from '@/constants/pages.ts';
 import { apiClient } from '@/lib/api/axios.ts';
 import { useApiRequest } from '@/lib/api/useApiRequest.ts';

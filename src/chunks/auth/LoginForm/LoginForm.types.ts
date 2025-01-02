@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { loginSchema } from '@/chunks/LoginForm/LoginForm.config.ts';
+import { loginSchema } from '@/chunks/auth/LoginForm/LoginForm.config.ts';
 import { TextboxProps } from '@/components/Textbox/Textbox.types.ts';
 import { User } from '@/lib/auth/auth.types.ts';
 

@@ -3,29 +3,24 @@ import '@/index.css';
 
 import { MotionConfig } from 'motion/react';
 import { SnackbarProvider } from 'notistack';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import { Subscription } from 'rxjs';
 
 import AppLogo from '@/components/AppLogo/AppLogo.tsx';
 import { Page } from '@/constants/pages.ts';
 import { authService } from '@/lib/auth/AuthService.ts';
+import useRxState from '@/lib/storage/useRxState.ts';
 import Dashboard from '@/pages/Dashboard.tsx';
 import SignIn from '@/pages/SignIn.tsx';
 import SignUp from '@/pages/SignUp.tsx';
 
 const App: FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const isAuthenticated = useRxState(authService.isAuthenticated$);
 
-  useEffect(() => {
-    const subscription: Subscription = authService.isAuthenticated$.subscribe(setIsAuthenticated);
-    return () => subscription.unsubscribe();
-  }, []);
-
-  if (isAuthenticated !== undefined) {
+  if (isAuthenticated === undefined) {
     return (
       <main className="grid h-screen w-screen place-items-center">
-        <AppLogo className="!text-5xl" />
+        <AppLogo className="animate-bounce !text-5xl" />
       </main>
     );
   }
