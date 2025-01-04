@@ -1,0 +1,65 @@
+import { Icon } from '@iconify/react';
+import { FC } from 'react';
+
+import Button from '@/components/Button/Button.tsx';
+import FormError from '@/components/FormError/FormError.tsx';
+import Textbox from '@/components/Textbox/Textbox.tsx';
+
+import { createMeetingFields } from './CreateMeeting.config.ts';
+import useCreateMeeting from './useCreateMeeting.ts';
+
+const CreateMeeting: FC = () => {
+  const h = useCreateMeeting();
+
+  if (h.createdMeeting) {
+    return (
+      <div className="flex flex-col gap-8">
+        <h1 className="text-lg font-semibold">Meeting created</h1>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="flex items-center justify-center rounded-xl bg-light text-xl font-bold text-placeholder">
+            {h.createdMeeting.code.match(/.{1,3}/g).join('-')}
+          </div>
+          <Button variant="subtle" onClick={h.handleCopyLink}>
+            <Icon icon="solar:copy-bold" className="mr-2 size-6" /> Copy link
+          </Button>
+        </div>
+        <Button>Join the meeting</Button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={h.handleSubmit} className="flex flex-col gap-8">
+      <h1 className="font-semibold">Create a Meeting</h1>
+      <div className="flex flex-col gap-4">
+        {createMeetingFields.map(({ fieldName, component, ...props }) => {
+          const Comp = component ?? Textbox;
+          return (
+            <div key={fieldName} className="space-y-1">
+              <div className="text-sm">{props.placeholder}</div>
+              <Comp {...props} {...h.form.register(fieldName)} />
+              <FormError message={h.form.formState.errors[fieldName]?.message} />
+            </div>
+          );
+        })}
+      </div>
+      {h.apiRequest.errors.length > 0 && (
+        <div className="rounded-md border border-danger bg-danger/20 p-2 text-sm text-danger">
+          <h3 className="font-semibold">Please fix these errors and try again</h3>
+          <ul className="mt-2 space-y-1">
+            {h.apiRequest.errors.map((error, index) => (
+              <li key={index} className="capitalize">
+                &bull; {error}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <Button type="submit" disabled={h.apiRequest.loading}>
+        Create meeting
+      </Button>
+    </form>
+  );
+};
+
+export default CreateMeeting;

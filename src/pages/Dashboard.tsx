@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react';
 import { motion } from 'motion/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ActionButton from '@/chunks/dashboard/ActionButton.tsx';
+import CreateMeeting from '@/chunks/dashboard/CreateMeeting/CreateMeeting.tsx';
 import AppLogo from '@/components/AppLogo/AppLogo.tsx';
 import Button from '@/components/Button/Button.tsx';
 import UserCalendar from '@/components/UserCalendar/UserCalendar.tsx';
@@ -14,6 +15,7 @@ import useRxState from '@/lib/storage/useRxState.ts';
 const Dashboard: FC = () => {
   const navigate = useNavigate();
   const user = useRxState(authService.userStorage.data$);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const handleLogout = async () => {
     await authService.logout();
@@ -31,7 +33,11 @@ const Dashboard: FC = () => {
   };
 
   const actions = [
-    { icon: 'material-symbols:video-call', title: 'Create meeting' },
+    {
+      icon: 'material-symbols:video-call',
+      title: 'Create meeting',
+      clickHandler: () => setShowCreateModal(true),
+    },
     { icon: 'ic:baseline-group', title: 'Join meeting' },
     { icon: 'mdi:calendar-edit', title: 'Schedule meeting' },
     { icon: 'mdi:history', title: 'Meeting history' },
@@ -100,12 +106,35 @@ const Dashboard: FC = () => {
           >
             {actions.map((action, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <ActionButton icon={action.icon} title={action.title} />
+                <ActionButton
+                  icon={action.icon}
+                  title={action.title}
+                  onClick={action.clickHandler}
+                />
               </motion.div>
             ))}
           </motion.div>
         </motion.main>
       </div>
+      {showCreateModal && (
+        <div
+          className="fixed left-0 top-0 grid h-screen w-screen place-items-center bg-primary/20"
+          onClick={() => setShowCreateModal(false)}
+        >
+          <motion.div
+            variants={itemVariants}
+            onClick={(e) => e.stopPropagation()}
+            className="relative min-w-96 rounded-xl bg-white p-8 shadow-lg"
+          >
+            <Icon
+              icon="mi:close"
+              className="absolute right-8 top-8 size-8"
+              onClick={() => setShowCreateModal(false)}
+            />
+            <CreateMeeting />
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 };
