@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
-    @apply text-text;
+    @apply text-text text-2xl tracking-widest;
+    font-family: 'Rubik Spray Paint', system-ui;
 }

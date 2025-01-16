@@ -12,23 +12,14 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.0.18",
-    "@hookform/resolvers": "^3.9.0",
-    "@radix-ui/react-slot": "^1.1.0",
+    "@fontsource/rubik-spray-paint": "^5.1.1",
     "axios": "^1.7.9",
-    "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
-    "dayjs": "^1.11.12",
     "idb-keyval": "^6.2.1",
     "motion": "^11.15.0",
-    "notistack": "^3.0.1",
     "react": "^18.3.1",
-    "react-calendar": "^5.1.0",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.52.1",
-    "react-router-dom": "^6.24.0",
-    "rxjs": "^7.8.1",
-    "yup": "^1.4.0"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
