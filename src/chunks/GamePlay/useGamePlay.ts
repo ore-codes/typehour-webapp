@@ -2,7 +2,7 @@ import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from 'r
 import { io, Socket } from 'socket.io-client';
 
 import { SERVER_URL } from '@/App.config.ts';
-import { PlayingGameProps } from '@/chunks/GamePlay/PlayingGame/PlayingGame.types.ts';
+import { PlayingGameProps } from '@/components/PlayingGame/PlayingGame.types.ts';
 import { useToast } from '@/components/Toast/ToastContext.tsx';
 import useRxState from '@/lib/store/useRxState.ts';
 

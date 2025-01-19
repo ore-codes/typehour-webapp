@@ -2,8 +2,8 @@ import { motion } from 'motion/react';
 import { FC } from 'react';
 
 import { containerVariants } from '@/chunks/GamePlay/GamePlay.config.ts';
-import { PlayingGameProps } from '@/chunks/GamePlay/PlayingGame/PlayingGame.types.ts';
 import Car from '@/components/Car/Car.tsx';
+import { PlayingGameProps } from '@/components/PlayingGame/PlayingGame.types.ts';
 
 const PlayingGame: FC<PlayingGameProps> = (props) => {
   return (

@@ -1,14 +1,14 @@
 import { motion } from 'motion/react';
 import { FC } from 'react';
 
-import CompleteGame from '@/chunks/GamePlay/CompleteGame/CompleteGame.tsx';
-import IdleGame from '@/chunks/GamePlay/IdleGame/IdleGame.tsx';
-import PlayingGame from '@/chunks/GamePlay/PlayingGame/PlayingGame.tsx';
 import useGamePlay from '@/chunks/GamePlay/useGamePlay.ts';
-import WaitingGame from '@/chunks/GamePlay/WaitingGame/WaitingGame.tsx';
 import Scoreboard from '@/chunks/Scoreboard/Scoreboard.tsx';
 import TypingArea from '@/chunks/TypingArea/TyingArea.tsx';
+import CompleteGame from '@/components/CompleteGame/CompleteGame.tsx';
+import IdleGame from '@/components/IdleGame/IdleGame.tsx';
+import PlayingGame from '@/components/PlayingGame/PlayingGame.tsx';
 import Road from '@/components/Road/Road.tsx';
+import WaitingGame from '@/components/WaitingGame/WaitingGame.tsx';
 
 const GamePlay: FC = () => {
   const h = useGamePlay();

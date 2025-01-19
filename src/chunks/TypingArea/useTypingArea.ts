@@ -18,7 +18,6 @@ export default function useTypingArea() {
     return ['', 0];
   }, [userPlayer?.typedText, userPlayer?.paragraph]);
 
-  // Determine the state of a character
   const stateOfChar = useCallback(
     (index: number): CharacterState => {
       const absoluteIndex = windowStart + index;

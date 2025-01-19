@@ -45,7 +45,7 @@ const CompleteGame: FC<CompleteGameProps> = (props) => {
               <span>
                 {index} Player {player.id.slice(0, 4)}
               </span>
-              <strong className="text-lime-300">{Math.round(player.progress)}km</strong>
+              <strong className="text-lime-300">{Math.round(player.score)}</strong>
             </li>
           ))}
         </ol>
