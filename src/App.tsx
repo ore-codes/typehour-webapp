@@ -34,6 +34,9 @@ const App: FC = () => {
   return (
     <MotionConfig transition={{ duration: 1 }}>
       <ToastProvider>
+        <div className="fixed left-0 top-0 bg-black p-2 text-sm text-white">
+          Icons/Images from Freepik and Unsplash
+        </div>
         <GamePlay />
       </ToastProvider>
     </MotionConfig>
