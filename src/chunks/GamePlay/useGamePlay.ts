@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 import { SERVER_URL } from '@/App.config.ts';
@@ -7,25 +7,20 @@ import { useToast } from '@/components/Toast/ToastContext.tsx';
 import useRxState from '@/lib/store/useRxState.ts';
 
 import { gamePlayService } from './GamePlay.service.ts';
-import {
-  ErrorPayload,
-  GameStatus,
-  LeaderboardPayload,
-  Player,
-  SuccessPayload,
-} from './GamePlay.types.ts';
+import { ErrorPayload, GameStatus, LeaderboardPayload, SuccessPayload } from './GamePlay.types.ts';
 
 export default function useGamePlay() {
-  const [leaderboard, setLeaderboard] = useState<Player[]>();
   const toast = useToast();
   const gameState = useRxState(gamePlayService.gameStateStore.data$);
   const userPlayer = useRxState(gamePlayService.user$);
+  const leaderboard = useRxState(gamePlayService.leaderboardStore.data$);
   const joinInputRef = useRef<HTMLInputElement>(null);
   const socketRef = useRef<Socket | null>(null);
 
   const gameTime = useMemo<number>(() => {
     if (leaderboard?.length) {
-      return leaderboard[0].finishTime - gameState?.startTime;
+      const finisher = leaderboard.find((player) => player.finishTime);
+      return finisher.finishTime - gameState?.startTime;
     }
   }, [gameState?.startTime, leaderboard]);
 
@@ -44,11 +39,7 @@ export default function useGamePlay() {
 
   useEffect(() => {
     gamePlayService.restart();
-    const socket = io(SERVER_URL, {
-      auth: {
-        'ngrok-skip-browser-warning': '69420',
-      },
-    });
+    const socket = io(SERVER_URL);
     socketRef.current = socket;
 
     socket.on('gameJoined', (data: SuccessPayload) => {
@@ -80,7 +71,7 @@ export default function useGamePlay() {
     });
 
     socket.on('gameCompleted', (data: LeaderboardPayload) => {
-      setLeaderboard(data.leaderboard);
+      gamePlayService.leaderboardStore.setData(data.leaderboard);
     });
 
     socket.on('error', (data: ErrorPayload) => {
@@ -123,6 +114,7 @@ export default function useGamePlay() {
   }, [status, handleKeyPress]);
 
   const handleCreate = useCallback(() => {
+    gamePlayService.restart();
     socketRef.current?.emit('createGame', gamePlayService.newPlayerId);
   }, []);
 

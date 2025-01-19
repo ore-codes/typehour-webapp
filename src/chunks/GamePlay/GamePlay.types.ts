@@ -21,6 +21,7 @@ export type Player = {
   typedText: string;
   paragraph: string;
   finishTime?: number;
+  score?: number;
 };
 
 export type GameState = {

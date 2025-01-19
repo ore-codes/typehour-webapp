@@ -24,6 +24,7 @@ const Car: FC<CarProps> = ({ row, col, relativePos = 0, isUser = false }) => {
         backgroundImage: `url('/car-sprite.png')`,
         backgroundPosition: `${bgPosition.x / 4}px ${bgPosition.y / 4}px`,
         marginBottom: `${relativePos / 10}px`,
+        transition: 'margin-bottom 0.3s ease-in-out',
       }}
     />
   );

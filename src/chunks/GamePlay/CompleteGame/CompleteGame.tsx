@@ -38,16 +38,14 @@ const CompleteGame: FC<CompleteGameProps> = (props) => {
           {props.leaderboard.map((player, index) => (
             <li
               key={index}
-              className={cn('flex justify-between gap-4', {
+              className={cn('flex justify-between gap-16', {
                 'bg-white/30': props.userPlayerId === player.id,
               })}
             >
               <span>
-                Player {player.id.slice(0, 3)}
-                {index}
+                {index} Player {player.id.slice(0, 4)}
               </span>
               <strong className="text-lime-300">{Math.round(player.progress)}km</strong>
-              <small>{Math.round(player.speed)}km/h</small>
             </li>
           ))}
         </ol>

@@ -9,6 +9,7 @@ class GamePlayService {
   gameIdStore = new SessionStorageService<GameId>('gameId');
   gameStateStore = new SessionStorageService<GameState>('gameState');
   playerIdStore = new SessionStorageService<Player['id']>('playerId');
+  leaderboardStore = new SessionStorageService<Player[]>('leaderboard');
 
   user$ = combineLatest([this.playerIdStore.data$, this.gameStateStore.data$]).pipe(
     map(([playerId, gameState]) => {
@@ -34,6 +35,7 @@ class GamePlayService {
     this.gameIdStore.clear();
     this.gameStateStore.clear();
     this.playerIdStore.clear();
+    this.leaderboardStore.clear();
   }
 }
 
