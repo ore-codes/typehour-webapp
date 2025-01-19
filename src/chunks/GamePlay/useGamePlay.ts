@@ -44,7 +44,11 @@ export default function useGamePlay() {
 
   useEffect(() => {
     gamePlayService.restart();
-    const socket = io(SERVER_URL);
+    const socket = io(SERVER_URL, {
+      auth: {
+        'ngrok-skip-browser-warning': '69420',
+      },
+    });
     socketRef.current = socket;
 
     socket.on('gameJoined', (data: SuccessPayload) => {
