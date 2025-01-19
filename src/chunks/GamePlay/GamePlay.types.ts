@@ -2,11 +2,14 @@ export type SuccessPayload = Partial<{
   gameId: string;
   player: Player;
   gameState: GameState;
-  playerId?: string;
 }>;
 
 export type ErrorPayload = {
   message: string;
+};
+
+export type LeaderboardPayload = {
+  leaderboard: Player[];
 };
 
 export type GameId = string;
@@ -17,6 +20,7 @@ export type Player = {
   speed: number;
   typedText: string;
   paragraph: string;
+  finishTime?: number;
 };
 
 export type GameState = {
@@ -25,4 +29,4 @@ export type GameState = {
   startTime: number;
 };
 
-export type GameStatus = 'IDLE' | 'WAITING' | 'PLAYING';
+export type GameStatus = 'IDLE' | 'WAITING' | 'PLAYING' | 'COMPLETE';

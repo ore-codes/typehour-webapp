@@ -12,7 +12,6 @@ const IdleGame = forwardRef<HTMLInputElement, IdleGameProps>((props, ref) => {
   return (
     <motion.div
       className="flex items-center gap-8"
-      key="idle"
       variants={containerVariants}
       initial="initial"
       animate="animate"

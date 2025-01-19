@@ -2,13 +2,12 @@ import { motion } from 'motion/react';
 import { FC } from 'react';
 
 import { containerVariants } from '@/chunks/GamePlay/GamePlay.config.ts';
-import { TrackProps } from '@/chunks/GamePlay/Track/Track.types.ts';
+import { PlayingGameProps } from '@/chunks/GamePlay/PlayingGame/PlayingGame.types.ts';
 import Car from '@/components/Car/Car.tsx';
 
-const Track: FC<TrackProps> = (props) => {
+const PlayingGame: FC<PlayingGameProps> = (props) => {
   return (
     <motion.div
-      key="playing"
       className="absolute bottom-0 grid grid-cols-4 items-end gap-4"
       variants={containerVariants}
       initial="initial"
@@ -28,4 +27,4 @@ const Track: FC<TrackProps> = (props) => {
   );
 };
 
-export default Track;
+export default PlayingGame;

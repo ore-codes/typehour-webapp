@@ -6,7 +6,6 @@ const WaitingGame = () => {
   return (
     <motion.div
       className="self-center rounded-full bg-white p-2 text-yellow-950"
-      key="waiting"
       variants={containerVariants}
       initial="initial"
       animate="animate"

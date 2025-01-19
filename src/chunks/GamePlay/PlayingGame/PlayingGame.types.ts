@@ -3,7 +3,7 @@ export type TrackPlayer = {
   relativePos: number;
 };
 
-export type TrackProps = {
+export type PlayingGameProps = {
   players: TrackPlayer[];
   userPlayerId: string;
 };

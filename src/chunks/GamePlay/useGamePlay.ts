@@ -1,27 +1,41 @@
-import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from 'react';
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 import { SERVER_URL } from '@/App.config.ts';
-import { TrackProps } from '@/chunks/GamePlay/Track/Track.types.ts';
+import { PlayingGameProps } from '@/chunks/GamePlay/PlayingGame/PlayingGame.types.ts';
 import { useToast } from '@/components/Toast/ToastContext.tsx';
 import useRxState from '@/lib/store/useRxState.ts';
 
 import { gamePlayService } from './GamePlay.service.ts';
-import { ErrorPayload, GameStatus, SuccessPayload } from './GamePlay.types.ts';
+import {
+  ErrorPayload,
+  GameStatus,
+  LeaderboardPayload,
+  Player,
+  SuccessPayload,
+} from './GamePlay.types.ts';
 
 export default function useGamePlay() {
+  const [leaderboard, setLeaderboard] = useState<Player[]>();
   const toast = useToast();
   const gameState = useRxState(gamePlayService.gameStateStore.data$);
   const userPlayer = useRxState(gamePlayService.user$);
   const joinInputRef = useRef<HTMLInputElement>(null);
   const socketRef = useRef<Socket | null>(null);
 
+  const gameTime = useMemo<number>(() => {
+    if (leaderboard?.length) {
+      return leaderboard[0].finishTime - gameState?.startTime;
+    }
+  }, [gameState?.startTime, leaderboard]);
+
   const status = useMemo<GameStatus>(() => {
     if (!gameState) return 'IDLE';
+    if (leaderboard) return 'COMPLETE';
     return gameState.gameInProgress ? 'PLAYING' : 'WAITING';
-  }, [gameState]);
+  }, [gameState, leaderboard]);
 
-  const trackPlayers = useMemo<TrackProps['players']>(() => {
+  const trackPlayers = useMemo<PlayingGameProps['players']>(() => {
     return gameState?.players.map((player) => ({
       id: player.id,
       relativePos: player.progress - userPlayer.progress,
@@ -57,11 +71,12 @@ export default function useGamePlay() {
       gamePlayService.update(data);
     });
 
-    socket.on('gameLeft', (data: SuccessPayload) => {
-      if (!userPlayer?.id || data.playerId === userPlayer.id) {
-        gamePlayService.restart();
-        window.location.reload();
-      }
+    socket.on('gameStateUpdated', (data: SuccessPayload) => {
+      gamePlayService.update(data);
+    });
+
+    socket.on('gameCompleted', (data: LeaderboardPayload) => {
+      setLeaderboard(data.leaderboard);
     });
 
     socket.on('error', (data: ErrorPayload) => {
@@ -128,11 +143,11 @@ export default function useGamePlay() {
     handleJoinInputKeyDown,
     handleQuit,
     joinInputRef,
+    leaderboard,
+    playerId: userPlayer?.id,
     speed: userPlayer?.speed ?? 10,
     status,
-    trackProps: {
-      userPlayerId: userPlayer?.id,
-      players: trackPlayers,
-    } satisfies TrackProps,
+    trackPlayers: trackPlayers,
+    gameTime,
   };
 }
