@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FC } from 'react';
 
 type RoadProps = {
@@ -6,6 +6,7 @@ type RoadProps = {
 };
 
 const Road: FC<RoadProps> = ({ speed = 0 }) => {
+  const logFactor = Math.max(1, Math.log(speed + 1) * 10) * 2;
   return (
     <div className="absolute -z-40 flex h-screen w-full bg-asphalt">
       <motion.div
@@ -13,7 +14,7 @@ const Road: FC<RoadProps> = ({ speed = 0 }) => {
         className="flex h-[300vh] w-full"
         animate={{ y: ['-200vh', '0vh'] }}
         transition={{
-          duration: 100 - (speed * 95) / 100,
+          duration: 100 - (logFactor * 95) / 100,
           ease: 'linear',
           repeat: Infinity,
         }}

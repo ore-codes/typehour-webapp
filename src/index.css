@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 body {
-    @apply text-text text-2xl tracking-widest;
+    @apply text-text text-2xl tracking-widest bg-[url('/bg.jpg')] bg-cover;
     font-family: 'Rubik Spray Paint', system-ui;
+}
+
+button {
+    @apply cursor-pointer;
 }

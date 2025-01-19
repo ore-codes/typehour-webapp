@@ -10,11 +10,9 @@ type CarProps = {
   isUser?: boolean;
 };
 
-const Car: FC<CarProps> = ({ row, col, isUser = false }) => {
+const Car: FC<CarProps> = ({ row, col, relativePos = 0, isUser = false }) => {
   const bgPosition = useMemo(() => carConfig.bgPosition(row, col), [col, row]);
   const [bgDim, spriteDim] = useMemo(() => [carConfig.dimensions, carConfig.spriteDimensions], []);
-
-  console.log({ bgDim, spriteDim, bgPosition });
 
   return (
     <figure
@@ -25,6 +23,7 @@ const Car: FC<CarProps> = ({ row, col, isUser = false }) => {
         backgroundSize: `${spriteDim.width / 4}px ${spriteDim.height / 4}px`,
         backgroundImage: `url('/car-sprite.png')`,
         backgroundPosition: `${bgPosition.x / 4}px ${bgPosition.y / 4}px`,
+        marginBottom: `${relativePos / 10}px`,
       }}
     />
   );
